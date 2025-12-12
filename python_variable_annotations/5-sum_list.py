@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""This module provides a type-annotated function sum_list."""
 
 
 from typing import List
