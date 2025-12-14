@@ -4,7 +4,8 @@ from typing import Callable
 
 
 def make_multiplier(multiplier: float) -> Callable[[float], float]:
-    """Takes a string k and an int or float v as arguments"""    
+    """Takes a string k and an int or float v as arguments""" 
+       
     def multiplier_function(n: float) -> float:
         """Takes a string k and an int or float v as arguments"""
         return n * multiplier
