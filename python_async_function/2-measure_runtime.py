@@ -16,7 +16,7 @@ def measure_time(n: int, max_delay: int) -> float:
 
     Args:
         n (int): Coroutine sayı
-        max_delay (int): Maksimum gecikmə müddəti
+        max_delay (int): Max gecikmə müddəti
 
     Returns:
         float: Orta icra müddəti
