@@ -1,82 +1,41 @@
 const fs = require('fs');
 
 function countStudents(path) {
-    let content;
-    try {
-        content = fs.readFileSync(path, 'utf-8');
-    } catch (err) {
-        throw new Error('Cannot load the database');
-    }
-
-    const lines = content.split('\n').filter((l) => l.trim() !== '');
-    if (lines.length === 0) {
-        console.log('Number of students: 0');
-        return;
-    }
-
-    // ilk satır başlık olduğu için atla
-    const header = lines.shift();
-    const fields = {};
-    lines.forEach((line) => {
-        const parts = line.split(',');
-        if (parts.length < 4) return; // geçersiz
-        const field = parts[3].trim();
-        const firstname = parts[0].trim();
-        if (firstname === '' || field === '') return;
-        if (!fields[field]) {
-            fields[field] = [];
-        }
-        fields[field].push(firstname);
-    });
-
-    const total = Object.values(fields).reduce((acc, arr) => acc + arr.length, 0);
-    console.log(`Number of students: ${total}`);
-    Object.keys(fields).forEach((f) => {
-        console.log(`Number of students in ${f}: ${fields[f].length}. List: ${fields[f].join(', ')}`);
-    });
-}
-
-module.exports = countStudents;
-const fs = require('fs');
-
-function countStudents(path) {
   let content;
+
   try {
-    content = fs.readFileSync(path, 'utf-8');
+    content = fs.readFileSync(path);
   } catch (err) {
     throw new Error('Cannot load the database');
   }
 
-  const lines = content.split('\n').filter((l) => l.trim() !== '');
-  if (lines.length === 0) {
-    console.log('Number of students: 0');
-    return;
+  content = content.toString().split('\n');
+
+  let students = content.filter((item) => item);
+
+  students = students.map((item) => item.split(','));
+
+  const NUMBER_OF_STUDENTS = students.length ? students.length - 1 : 0;
+  console.log(`Number of students: ${NUMBER_OF_STUDENTS}`);
+
+  const fields = {};
+  for (const i in students) {
+    if (i !== 0) {
+      if (!fields[students[i][3]]) fields[students[i][3]] = [];
+
+      fields[students[i][3]].push(students[i][0]);
+    }
   }
 
-  // başlığı at
-  lines.shift();
-  const fields = {};
-  lines.forEach((line) => {
-    const parts = line.split(',');
-    if (parts.length < 4) return;
-    const field = parts[3].trim();
-    const firstname = parts[0].trim();
-    if (firstname === '' || field === '') return;
-    if (!fields[field]) {
-      fields[field] = [];
-    }
-    fields[field].push(firstname);
-  });
+  delete fields.field;
 
-  const total = Object.values(fields).reduce((acc, arr) => acc + arr.length, 0);
-  console.log(`Number of students: ${total}`);
-  Object.keys(fields).forEach((f) => {
+  for (const key of Object.keys(fields)) {
     console.log(
-      `Number of students in ${f}: ${fields[f].length}. List: ${fields[f].join(
-        ', ',
-      )}`,
+      `Number of students in ${key}: ${fields[key].length}. List: ${fields[
+        key
+      ].join(', ')}`,
     );
-  });
+  }
 }
 
 module.exports = countStudents;
