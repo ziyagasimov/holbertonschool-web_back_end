@@ -1,16 +1,22 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es6: true, // "es2021" əvəzinə "es6" yazın
     jest: true,
     node: true,
   },
   extends: 'eslint:recommended',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2018, // "latest" əvəzinə 2018 yazmaq daha təhlükəsizdir
     sourceType: 'module',
   },
   rules: {
-    // Lazım olsa bura qaydalar əlavə edə bilərsiniz
+    'no-console': 'off',
+    'no-shadow': 'off',
+    'no-restricted-syntax': [
+      'error',
+      'LabeledStatement',
+      'WithStatement',
+    ],
   },
 };
